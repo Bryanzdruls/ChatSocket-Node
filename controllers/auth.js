@@ -10,7 +10,7 @@ const login = async(req,res=response) =>{
         //Se valida que el usuario Exista
         if (!user) {
             return res.status(400).json({
-                msg: 'User / password is not valid '
+                msg: 'User / password is not valid'
             })
         }
         //Se valida que el usuario se encuentre activo
@@ -22,7 +22,6 @@ const login = async(req,res=response) =>{
 
         //Se valida que la contraseña este correcta
         const validPassword = bcryptjs.compareSync(password, user.password);
-
         if (!validPassword) {
             return res.status(400).json({
                 msg: 'User / password is not valid '
