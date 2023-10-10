@@ -58,10 +58,12 @@ const usersPatch = (req, res) => {
 }
 const usersDelete = async(req, res) => {
     const {id} = req.params;
-    
+    //const uid =req.uid;
     const user  = await User.findByIdAndUpdate(id, {state:false});
+    const userAuthenticated =req.user
     res.status(200).json({
-      id
+      user,
+      userAuthenticated
     });
   }
 
