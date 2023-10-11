@@ -2,7 +2,7 @@ const { response } = require("express");
 const { User, Category, Product } = require("../models");
 const { ObjectId } = require("mongoose").Types;
 
-const colectionAvailables = ["users", "categories", "products", "roles"];
+const collectionAvailables = ["users", "categories", "products", "roles"];
 
 const searchUsers = async(term = '', res = response) =>{
     const isMongoId = ObjectId.isValid( term );//true
@@ -58,14 +58,14 @@ const searchProducts = async(term = '', res = response) =>{
     })
 }
 const search = async (req, res = response) => {
-  const { colection, term } = req.params;
-  if (!colectionAvailables.includes(colection)) {
+  const { collection, term } = req.params;
+  if (!collectionAvailables.includes(collection)) {
     return res.status(400).json({
-      msg: `Allowed Colections are: ${colectionAvailables}`,
+      msg: `Allowed Collections are: ${collectionAvailables}`,
     });
   }
 
-  switch (colection) {
+  switch (collection) {
     case "users":
         searchUsers(term, res)
       break;

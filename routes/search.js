@@ -4,6 +4,6 @@ const { search } = require("../controllers/search");
 
 const router = Router();
 
-router.get('/:colection/:term',search);
+router.get('/:collection/:term',search);
 
 module.exports = router
