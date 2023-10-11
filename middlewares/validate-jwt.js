@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { response, request } = require('express');
 const User = require('../models/user');
+
 const validateJWT = async(req=request, res = response, next) =>{
     const token = req.header('x-token');
     if (!token) {
@@ -34,7 +35,29 @@ const validateJWT = async(req=request, res = response, next) =>{
         })
     }
 }
+const verifyJWT = async(token) => {
+    try {
+        if (token.length <10) {
+            return null;
+        }
 
+        const {uid} = jwt.verify(token, process.env.SECRET_KEY);
+        const user = await User.findById(uid);
+        if (user) {
+            if (user.state) {
+                return user;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
 module.exports={
-    validateJWT
+    validateJWT,
+    verifyJWT
 }

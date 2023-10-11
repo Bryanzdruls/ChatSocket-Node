@@ -3,56 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Sign in</title>
 </head>
-<body>
-    <h1>Google Sign In</h1>
+<body class="container">
+    <div class="row mt-5">
+        <div class="col-sm-6">
+            <h1>Google Sign In</h1>
+            <hr>
+            <div class="g_id_signin"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="sign_in_with"
+            data-shape="rectangular"
+            data-logo_alignment="left">
+            </div>
+            
+            <br>
+            <button id="google_signout">
+                Sing Out
+            </button>
+        </div>
+        <div class="col-sm-6">
+            <h1>Manual Log In</h1>
+            <hr>
+            <form action="" class="d-grid">
+                <input type="text" name="email" class="form-control mb-2" placeholder="email">
+                <input type="text" name="password" class="form-control mb-2" placeholder="password">
+    
+                <button type="submit" class="btn btn-primary">
+                    Log in
+                </button>
+            </form>
+        </div>
+    </div>
+    
     <div id="g_id_onload"
-        data-client_id="737895127033-31ur6o3t1uotuehimceug0r5lqqgm1i5.apps.googleusercontent.com"
-        data-auto_prompt="false"
-        data-callback="handleCredentialResponse">
-    </div>
-    <div class="g_id_signin"
-        data-type="standard"
-        data-size="large"
-        data-theme="outline"
-        data-text="sign_in_with"
-        data-shape="rectangular"
-        data-logo_alignment="left">
-    </div>
-    <button id="google_signout">
-        Sing Out
-    </button>
+    data-client_id="737895127033-31ur6o3t1uotuehimceug0r5lqqgm1i5.apps.googleusercontent.com"
+    data-auto_prompt="false"
+    data-callback="handleCredentialResponse">
     <script src="https://accounts.google.com/gsi/client" async></script>
-    <script>
-        function handleCredentialResponse(response) {
-           // decodeJwtResponse() is a custom function defined by you
-           // to decode the credential response.
-           const body = {id_token: response.credential};
-           fetch('http://localhost:8080/api/auth/google',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-           })
-            .then( resp => resp.json())
-            .then(resp =>{
-                console.log(resp);
-                localStorage.setItem('email',resp.user.email)
-            })
-            .catch(console.warn);
-        }
-        const button =document.getElementById('google_signout');
-        button.onclick = ()=> {
-            //console.log(google.accounts.id);
-            google.accounts.id.disableAutoSelect();
+</div>
+    <script src="./js/auth.js"></script>
 
-            google.accounts.id.revoke(localStorage.getItem('email'), done =>{
-                localStorage.clear();
-                location.reload();
-            })
-        }
-      </script>
 </body>
 </html>
